@@ -29,19 +29,17 @@ class Car(models.Model):
 
 
 
-
-
-
-
-
-
-class Automaker(models.Model):
+class Driver(models.Model):
     id = models.CharField(primary_key=True,max_length=255)
-    brand_name = models.CharField(max_length=255)
-    car = models.ForeignKey('Car', on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255)
+    second_name = models.CharField(max_length=255)
+    car_id = models.ForeignKey('Car', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.brand_name
+        return "{} {}".format(self.first_name, self.second_name)
+
+
+
         
 
 
