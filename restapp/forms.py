@@ -7,6 +7,13 @@ class CreateCarForm(forms.Form):
     body_type = forms.CharField()
     seats = forms.IntegerField()
 
+
+class CreateDriverForm(forms.Form):
+    first_name = forms.CharField()
+    second_name = forms.CharField()
+    car_id = forms.UUIDField()
+
+
     
     
 class UpdateForm(forms.Form):
