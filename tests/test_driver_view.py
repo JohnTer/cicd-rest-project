@@ -140,4 +140,4 @@ class ViewDriverPostTest(TestCase):
         url = "http://127.0.0.1:8000/api/v1/driver/?car_id={car_id}&first_name={first_name}&second_name={second_name}".format(**json_dict)
         response = self.client.post(url)
         
-        self.assertEqual(response.status_code, 424)
+        self.assertEqual(response.status_code, 422)
