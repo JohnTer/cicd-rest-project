@@ -1,4 +1,3 @@
-from .forms import *
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
@@ -6,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from .models import Car, Driver
+from .forms import *
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CarView(View):
@@ -27,7 +27,6 @@ class CarView(View):
         else:
             return HttpResponse("There is no such id", status=422)
 
-
     @csrf_exempt
     def post(self, request, *args, **kwargs):
         form = CreateCarForm(request.GET)
@@ -37,7 +36,6 @@ class CarView(View):
             return HttpResponse(car_inst.id, status = 201)
         else:
             return HttpResponse("Data is not valid", status=422)
-
 
     @csrf_exempt
     def put(self, request, *args, **kwargs):
@@ -50,9 +48,6 @@ class CarView(View):
             return HttpResponse(car_inst.id, status = 200)
         else:
             return HttpResponse("There is no such id", status=422)
-
-
-
 
 @method_decorator(csrf_exempt, name='dispatch')
 class DriverView(View):
@@ -74,7 +69,6 @@ class DriverView(View):
         else:
             return HttpResponse("There is no such id", status=422)
 
-
     @csrf_exempt
     def post(self, request, *args, **kwargs):
         form = CreateDriverForm(request.GET)
@@ -88,5 +82,3 @@ class DriverView(View):
             return HttpResponse(driver_inst.id, status = 201)
         else:
             return HttpResponse("Data is not valid", status=422)
-
-
