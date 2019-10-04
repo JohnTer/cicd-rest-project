@@ -1,12 +1,11 @@
 from .forms import *
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from .models import Car, Driver
 from django.forms.models import model_to_dict
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-
+from .models import Car, Driver
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CarView(View):
@@ -16,7 +15,7 @@ class CarView(View):
             car_inst = get_object_or_404(Car, pk=form.cleaned_data["id"])
             return JsonResponse(model_to_dict(car_inst))
         else:
-            return HttpResponse("There is no such id", status=404)
+            return HttpResponse("Invalid id", status=422)
 
     @csrf_exempt
     def delete(self, request, *args, **kwargs):
@@ -26,7 +25,7 @@ class CarView(View):
             car_inst.delete()
             return HttpResponse(status = 204)
         else:
-            return HttpResponse("There is no such id", status=404)
+            return HttpResponse("There is no such id", status=422)
 
 
     @csrf_exempt
@@ -35,21 +34,22 @@ class CarView(View):
         if form.is_valid():
             car_inst = Car.create(**form.cleaned_data)
             car_inst.save()
-            return HttpResponse(status = 201)
+            return HttpResponse(car_inst.id, status = 201)
         else:
-            return HttpResponse("Data is not valid", status=404)
+            return HttpResponse("Data is not valid", status=422)
 
 
     @csrf_exempt
-    def update(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         form = UpdateForm(request.GET)
         if form.is_valid():
             car_inst = get_object_or_404(Car, pk=form.cleaned_data["id"]) 
+            del form.cleaned_data["id"]
             car_inst.update(**form.cleaned_data)
             car_inst.save()
-            return HttpResponse(status = 201)
+            return HttpResponse(car_inst.id, status = 200)
         else:
-            return HttpResponse("There is no such id", status=404)
+            return HttpResponse("There is no such id", status=422)
 
 
 
@@ -62,7 +62,7 @@ class DriverView(View):
             driver_inst = get_object_or_404(Driver, pk=form.cleaned_data["id"])
             return JsonResponse(model_to_dict(driver_inst))
         else:
-            return HttpResponse("There is no such id", status=404)
+            return HttpResponse("There is no such id", status=422)
 
     @csrf_exempt
     def delete(self, request, *args, **kwargs):
@@ -72,7 +72,7 @@ class DriverView(View):
             driver_inst.delete()
             return HttpResponse(status = 204)
         else:
-            return HttpResponse("There is no such id", status=404)
+            return HttpResponse("There is no such id", status=422)
 
 
     @csrf_exempt
@@ -85,8 +85,8 @@ class DriverView(View):
                 return HttpResponse("There is no such car id", status=404)
             driver_inst = Driver.create(first_name=form.cleaned_data['first_name'],second_name = form.cleaned_data['second_name'], car_id=car_inst)
             driver_inst.save()
-            return HttpResponse(status = 201)
+            return HttpResponse(driver_inst.id, status = 201)
         else:
-            return HttpResponse("Data is not valid", status=404)
+            return HttpResponse("Data is not valid", status=422)
 
 
