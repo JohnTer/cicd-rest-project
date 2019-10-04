@@ -1,6 +1,6 @@
+import uuid
 from django import forms
 from django.core.exceptions import ValidationError
-import uuid
 
 class CreateCarForm(forms.Form):
     model = forms.CharField()
@@ -13,9 +13,6 @@ class CreateDriverForm(forms.Form):
     second_name = forms.CharField()
     car_id = forms.UUIDField()
 
-
-    
-    
 class UpdateForm(forms.Form):
     id = forms.CharField()
     model = forms.CharField()
@@ -29,7 +26,6 @@ class UpdateForm(forms.Form):
             raise ValidationError("Invalid id")
         return data
 
-
 class DeleteForm(forms.Form):
     id = forms.CharField()
     def clean_id(self):
@@ -39,7 +35,6 @@ class DeleteForm(forms.Form):
         except ValueError:
             raise ValidationError("Invalid id")
         return data
-
 
 class SelectForm(forms.Form):
     id = forms.CharField()

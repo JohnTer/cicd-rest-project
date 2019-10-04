@@ -1,6 +1,6 @@
+import uuid
 from django.db import models
 from django.core import serializers
-import uuid
 
 
 class Car(models.Model):
@@ -25,7 +25,6 @@ class Car(models.Model):
         self.model = model 
         self.body_type = body_type
         self.seats = seats
-
 
 
 class Driver(models.Model):
