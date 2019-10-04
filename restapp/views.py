@@ -82,8 +82,8 @@ class DriverView(View):
             try:
                 car_inst = Car.objects.get(pk=form.cleaned_data['car_id'])
             except Car.DoesNotExist:
-                return HttpResponse("There is no such car id", status=404)
-            driver_inst = Driver.create(first_name=form.cleaned_data['first_name'],second_name = form.cleaned_data['second_name'], car_id=car_inst)
+                return HttpResponse("There is no such car id", status=422)
+            driver_inst = Driver.create(first_name=form.cleaned_data['first_name'],second_name = form.cleaned_data['second_name'], car_inst=car_inst)
             driver_inst.save()
             return HttpResponse(driver_inst.id, status = 201)
         else:

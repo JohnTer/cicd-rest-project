@@ -43,7 +43,7 @@ class ViewCarGetTest(TestCase):
 
     def test_get_invalid_id(self):
         response = self.client.get('/api/v1/car/?id={}'.format('12345'))
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 422)
 
 
 
@@ -74,7 +74,6 @@ class ViewCarDeleteTest(TestCase):
 
     def test_delete_correct(self):
         self.client.delete('/api/v1/car/?id={}'.format('d97a238d-92ca-4eb2-9137-f228c6956dce'))
-        #Car.objects.get(pk='d97a238d-92ca-4eb2-9137-f228c6956dce')
         self.assertRaises(Car.DoesNotExist, lambda: Car.objects.get(pk='d97a238d-92ca-4eb2-9137-f228c6956dce'))
 
 
@@ -84,7 +83,7 @@ class ViewCarDeleteTest(TestCase):
 
     def test_delete_invalid_id(self):
         response = self.client.delete('/api/v1/car/?id={}'.format('abcd'))
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 422)
         
 
 
@@ -111,7 +110,7 @@ class ViewCarPostTest(TestCase):
         }
         url = "http://127.0.0.1:8000/api/v1/car/?model={model}&body_type={body_type}&seats={seats}".format(**json_dict)
         response = self.client.post(url)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 422)
 
         
     def test_post_wrong_body_empty(self):
@@ -122,7 +121,7 @@ class ViewCarPostTest(TestCase):
         }
         url = "http://127.0.0.1:8000/api/v1/car/?model={model}&body_type={body_type}&seats={seats}".format(**json_dict)
         response = self.client.post(url)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 422)
 
 
 
@@ -176,7 +175,7 @@ class ViewCarPutTest(TestCase):
         }
         url = "http://127.0.0.1:8000/api/v1/car/?id={id}&model={model}&body_type={body_type}&seats={seats}".format(**json_dict)
         response = self.client.put(url)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 422)
 
     def test_put_no_seats_field(self):
         json_dict = {
@@ -186,7 +185,7 @@ class ViewCarPutTest(TestCase):
         }
         url = "http://127.0.0.1:8000/api/v1/car/?id={id}&model={model}&body_type={body_type}".format(**json_dict)
         response = self.client.put(url)
-        self.assertEqual(response.status_code, 400) 
+        self.assertEqual(response.status_code, 422) 
 
     
 

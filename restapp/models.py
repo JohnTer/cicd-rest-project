@@ -35,12 +35,12 @@ class Driver(models.Model):
     car_id = models.ForeignKey('Car', on_delete=models.CASCADE)
 
     @classmethod
-    def create(cls, first_name, second_name, car_id):
+    def create(cls, first_name, second_name, car_inst):
         driver_id = str(uuid.uuid4())
         driver = cls(id = driver_id, 
         first_name = first_name,
         second_name = second_name, 
-        car_id = car_id)
+        car_id = car_inst)
         return driver 
 
     def __str__(self):
