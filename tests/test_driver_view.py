@@ -76,8 +76,6 @@ class ViewDriverDeleteTest(TestCase):
         driver_inst.id = id2
         driver_inst.save()
 
-
-
     def test_delete_correct(self):
         self.client.delete('/api/v1/driver/?id={}'.format('d97a238d-92ca-4eb2-9137-f228c6956dce'))
         self.assertRaises(Car.DoesNotExist, lambda: Car.objects.get(pk='d97a238d-92ca-4eb2-9137-f228c6956dce'))
@@ -133,10 +131,6 @@ class ViewDriverPostTest(TestCase):
         self.assertEqual(response.status_code, 422)
 
 
-        
-
-
-        
     def test_post_wrong_body_empty(self):
         json_dict = {
         'car_id': '',
