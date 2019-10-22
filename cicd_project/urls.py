@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include, url
+from restapp.views import CDWebHookView
 
 urlpatterns = [
-    url(r'admin/', admin.site.urls),
-    url(r'^api/v1/', include('restapp.urls'))
+#    url(r'admin/', admin.site.urls),
+    url(r'^api/v1/', include('restapp.urls')),
+    url(r'update_server/', CDWebHookView.as_view())
 ]

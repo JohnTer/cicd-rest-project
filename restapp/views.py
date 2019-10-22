@@ -1,3 +1,4 @@
+import git
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
@@ -82,3 +83,13 @@ class DriverView(View):
             return HttpResponse(driver_inst.id, status = 201)
         else:
             return HttpResponse("Data is not valid", status=422)
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CDWebHookView(View):
+    @csrf_exempt
+    def post(self, request, *args, **kwargs):
+        repo = git.Repo('https://github.com/JohnTer/cicd-rest-project')
+        origin = repo.remotes.origin
+        origin.pull()
+        return HttpResponse("Update files successfully", status=200)
+
