@@ -5,6 +5,7 @@ from django.forms.models import model_to_dict
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.utils.decorators import method_decorator
+from cicd_project.settings import REPO_FOLDER
 from .models import Car, Driver
 from .forms import *
 
@@ -88,7 +89,7 @@ class DriverView(View):
 class CDWebHookView(View):
     @csrf_exempt
     def post(self, request, *args, **kwargs):
-        repo = git.Repo('https://github.com/JohnTer/cicd-rest-project')
+        repo = git.Repo(REPO_FOLDER)
         origin = repo.remotes.origin
         origin.pull()
         return HttpResponse("Update files successfully", status=200)

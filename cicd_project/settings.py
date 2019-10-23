@@ -118,6 +118,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+REPO_FOLDER = '/home/pth0n/cicd-rest-project/'
 try:
     from .local_settings import *
 except ImportError:
