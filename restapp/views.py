@@ -92,9 +92,9 @@ class CDWebHookView(View):
         repo = git.Repo(REPO_FOLDER)
         origin = repo.remotes.origin
         origin.pull()
-        return HttpResponse("Update files successfully" + REPO_FOLDER, status=200)
+        return HttpResponse("Update files successfully", status=200)
 
     def get(self, request, *args, **kwargs):
-        return HttpResponse("updated!", status=200)
+        return HttpResponse("test updated: " + REPO_FOLDER, status=200)
 
 
