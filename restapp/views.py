@@ -95,6 +95,6 @@ class CDWebHookView(View):
         return HttpResponse("Update files successfully", status=200)
 
     def get(self, request, *args, **kwargs):
-        return HttpResponse("test updated: " + REPO_FOLDER, status=200)
+        return HttpResponse("test updated: ", status=200)
 
 
